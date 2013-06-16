@@ -4,3 +4,4 @@
 - include: authorized_keys.yml
 - include: sysctl.yml
 - include: sudo.yml
+- include: openssh.yml
