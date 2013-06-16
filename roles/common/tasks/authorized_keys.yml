@@ -1,0 +1,7 @@
+---
+
+- name: Add public key to ~/.ssh/authorized_keys
+  authorized_key: user={{ item.username }} key="{{ item.key }}" state=present
+  with_items: $public_keys
+  tags:
+    - ssh-access

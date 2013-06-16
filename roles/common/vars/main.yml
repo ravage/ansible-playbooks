@@ -1,0 +1,13 @@
+---
+
+users:
+  - {
+      username: 'ravage',
+      password: "{{ lookup('password', 'credentials/ravage.pwd encrypt=sha512_crypt') }}"
+    }
+
+public_keys:
+  - {
+      username: 'ravage',
+      key: "{{ lookup('file', 'credentials/ravage.pub') }}"
+    }

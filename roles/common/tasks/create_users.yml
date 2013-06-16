@@ -1,0 +1,7 @@
+---
+
+- name: Create users with system access
+  user: name={{ item.username }} password={{ item.password }} state=present
+  with_items: $users
+  tags:
+    - system-users
