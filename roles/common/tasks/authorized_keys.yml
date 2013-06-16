@@ -5,3 +5,4 @@
   with_items: $public_keys
   tags:
     - ssh-access
+    - bootstrap-users

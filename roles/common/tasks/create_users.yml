@@ -5,3 +5,4 @@
   with_items: $users
   tags:
     - system-users
+    - bootstrap-users

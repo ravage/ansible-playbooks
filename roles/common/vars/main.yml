@@ -11,3 +11,7 @@ public_keys:
       username: 'ravage',
       key: "{{ lookup('file', 'credentials/ravage.pub') }}"
     }
+
+sudo:
+  group: wheel
+  users: [ ravage, vagrant ]

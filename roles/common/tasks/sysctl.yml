@@ -4,3 +4,4 @@
   copy: src=system/sysctl.conf dest=/etc/sysctl.conf owner=root group=root mode=0644 validate="sysctl -p %s"
   tags:
     - sysctl
+    - bootstrap-system

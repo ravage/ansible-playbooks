@@ -1,0 +1,29 @@
+---
+
+- name: Install sudo package
+  apt: pkg=sudo state=latest
+  tags:
+    - sudo
+    - bootstrap-system
+
+- name: Add wheel group
+  group: name=wheel
+  tags:
+    - sudo
+    - bootstrap-system
+
+- name: Add users to group wheel
+  user: name={{ item }} group={{ sudo['group'] }}
+  with_items: "{{ sudo['users'] }}"
+  tags:
+    - sudo
+
+- name: Copy /etc/sudoers
+  copy: src=system/sudoers dest=/etc/sudoers owner=root group=root mode=0440 validate="visudo -c -f %s"
+  tags:
+    - sudo
+
+- name: Copy /etc/sudoers.d/wheel
+  template: src=system/wheel.j2 dest=/etc/sudoers.d/wheel owner=root group=root mode=0440 validate="visudo -c -f %s"
+  tags:
+    - sudo

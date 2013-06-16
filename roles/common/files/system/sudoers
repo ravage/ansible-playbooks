@@ -1,0 +1,9 @@
+#
+# file: /etc/sudoers
+#
+
+Defaults env_reset
+
+root ALL=(ALL) ALL
+
+#includedir /etc/sudoers.d

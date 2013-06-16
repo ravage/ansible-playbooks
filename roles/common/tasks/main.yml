@@ -3,3 +3,4 @@
 - include: create_users.yml
 - include: authorized_keys.yml
 - include: sysctl.yml
+- include: sudo.yml
