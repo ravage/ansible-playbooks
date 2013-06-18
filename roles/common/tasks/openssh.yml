@@ -6,7 +6,7 @@
     - openssh
 
 - name: Copy /etc/ssh/sshd_config
-  template: src=system/sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root mode=0644
+  template: src=ssh/sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root mode=0644
   notify: restart openssh
   tags:
     - openssh

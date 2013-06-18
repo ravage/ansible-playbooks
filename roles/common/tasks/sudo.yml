@@ -19,11 +19,11 @@
     - sudo
 
 - name: Copy /etc/sudoers
-  copy: src=system/sudoers dest=/etc/sudoers owner=root group=root mode=0440 validate="visudo -c -f %s"
+  copy: src=sudo/sudoers dest=/etc/sudoers owner=root group=root mode=0440 validate="visudo -c -f %s"
   tags:
     - sudo
 
 - name: Copy /etc/sudoers.d/wheel
-  template: src=system/wheel.j2 dest=/etc/sudoers.d/wheel owner=root group=root mode=0440 validate="visudo -c -f %s"
+  template: src=sudo/wheel.j2 dest=/etc/sudoers.d/wheel owner=root group=root mode=0440 validate="visudo -c -f %s"
   tags:
     - sudo
