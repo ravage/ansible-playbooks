@@ -1,0 +1,3 @@
+[submodule "roles/client-playbooks"]
+	path = roles/client-playbooks
+	url = git@bitbucket.org:ravage/client-playbooks.git
