@@ -1,0 +1,6 @@
+---
+
+- name: Install add-apt-repository
+  apt: pkg=python-software-properties state=latest
+  tags:
+    - pkg

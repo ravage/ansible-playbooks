@@ -1,0 +1,30 @@
+---
+
+- name: Install PostgreSQL and development dependencies
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
+  tags:
+    - db
+
+
+# - hosts: webservers
+#   sudo: yes
+#   sudo_user: postgres
+#   gather_facts: no
+
+  # vars:
+  #   dbname: myapp
+  #   dbuser: django
+  #   dbpassword: mysupersecreetpassword
+
+# - name: ensure database is created
+#   action: postgresql_db db={{dbname}}
+
+# - name: ensure user has access to database
+#   action: postgresql_user db={{dbname}} user={{dbuser}} password={{dbpassword}} priv=ALL
+
+# - name: ensure user does not have unnecessary privilege
+#   action: postgresql_user user={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB

@@ -1,0 +1,6 @@
+---
+
+- name: Install vim package
+  apt: pkg=vim-nox state=latest
+  tags:
+    - editors

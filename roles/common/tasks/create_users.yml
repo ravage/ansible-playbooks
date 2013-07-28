@@ -1,7 +1,7 @@
 ---
 
 - name: Create users with system access
-  user: name={{ item.username }} password={{ item.password }} state=present
+  user: name={{ item.username }} password={{ item.password }} shell='/bin/bash' update_password=on_create state=present
   with_items: $users
   tags:
     - system-users

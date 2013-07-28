@@ -1,0 +1,7 @@
+---
+
+- name: Install redis package
+  apt: pkg=redis-server state=latest
+  tags:
+    - redis
+    - queue

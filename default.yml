@@ -3,3 +3,6 @@
 - hosts: test
   roles:
     - common
+- hosts: status
+  roles:
+    - common

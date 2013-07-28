@@ -1,2 +1,4 @@
 *.pub
 *.pwd
+roles/status-signuper-app
+status.yml
