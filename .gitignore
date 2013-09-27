@@ -2,3 +2,5 @@
 *.pwd
 roles/status-signuper-app
 status.yml
+vagrant.yml
+roles/client-playbooks
