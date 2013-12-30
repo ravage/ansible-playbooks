@@ -14,7 +14,7 @@
 
 - name: Add users to group wheel
   user: name={{ item }} group={{ sudo['group'] }}
-  with_items: "{{ sudo['users'] }}"
+  with_items: sudo['users']
   tags:
     - sudo
 
