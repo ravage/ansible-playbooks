@@ -1,6 +1,8 @@
-wget -O ruby-install-0.2.1.tar.gz https://github.com/postmodern/ruby-install/archive/v0.2.1.tar.gz
-tar -xzvf ruby-install-0.2.1.tar.gz
-cd ruby-install-0.2.1/
+RI_VERSION=0.3.4
+
+wget -O ruby-install-$RI_VERSION.tar.gz https://github.com/postmodern/ruby-install/archive/v$RI_VERSION.tar.gz
+tar -xzvf ruby-install-$RI_VERSION.tar.gz
+cd ruby-install-$RI_VERSION/
 sudo make install
 cd ..
-rm -rf ruby-install-0.2.1.tar.gz ruby-install-0.2.1
+rm -rf ruby-install-$RI_VERSION.tar.gz ruby-install-$RI_VERSION
