@@ -7,7 +7,7 @@
     - web
 
 - name: Add NGiNX repository
-  apt_repository: repo="deb http://nginx.org/packages/debian/ ${ansible_lsb.codename} nginx"
+  apt_repository: repo="deb http://nginx.org/packages/debian/ {{ ansible_lsb.codename }} nginx"
   tags:
     - nginx
     - web
