@@ -1,6 +1,7 @@
 *.pub
 *.pwd
 roles/status-signuper-app
+roles/desifilme-orderly-app
 status.yml
 vagrant.yml
 desifilme.yml

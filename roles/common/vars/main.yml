@@ -18,3 +18,5 @@ ssh:
 sudo:
   group: wheel
   users: [ ravage ]
+
+cache_time: 3600

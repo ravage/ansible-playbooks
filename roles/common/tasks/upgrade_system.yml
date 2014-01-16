@@ -1,0 +1,6 @@
+---
+
+- name: Upgrade system
+  apt: update_cache=yes upgrade=dist
+  tags:
+    - system
