@@ -1,6 +1,7 @@
 ---
 
 - name: Install PostgreSQL and development dependencies
+  sudo: yes
   apt: pkg={{ item }} state=latest
   with_items:
     - postgresql

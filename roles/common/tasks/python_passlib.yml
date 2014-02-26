@@ -1,0 +1,6 @@
+---
+
+- name: Install python-passlib package
+  apt: pkg=python-passlib state=latest
+  tags:
+    - libs

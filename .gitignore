@@ -2,7 +2,9 @@
 *.pwd
 roles/status-signuper-app
 roles/desifilme-orderly-app
+roles/mkis-promobolsa-app
 status.yml
 vagrant.yml
 desifilme.yml
+promobolsa.yml
 roles/client-playbooks
