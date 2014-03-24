@@ -3,8 +3,8 @@
 roles/status-signuper-app
 roles/desifilme-orderly-app
 roles/mkis-promobolsa-app
+roles/status-ghost
 status.yml
 vagrant.yml
 desifilme.yml
 promobolsa.yml
-roles/client-playbooks

@@ -33,6 +33,7 @@
     - images
     - mappings
     - php
+    - cloudflare.conf
   tags:
     - nginx
     - web
