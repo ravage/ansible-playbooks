@@ -18,4 +18,8 @@ sudo:
   users:
     - ravage
 
+ruby:
+  version: "2.2.0"
+  folder: "2.2"
+
 cache_time: 3600
