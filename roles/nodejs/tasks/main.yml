@@ -1,0 +1,16 @@
+---
+
+- name: Add NodeJS APT key
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  tags:
+    - nodejs
+
+- name: Add NodeJS repository
+  apt_repository: repo="deb https://deb.nodesource.com/node {{ ansible_lsb.codename }} main"
+  tags:
+    - nodejs
+
+- name: Install NodeJS packages
+  apt: name=nodejs state=latest update_cache=yes
+  tags:
+    - nodejs

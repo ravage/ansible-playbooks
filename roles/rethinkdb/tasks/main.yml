@@ -1,5 +1,5 @@
 ---
-- name: Add NGiNX APT key
+- name: Add RethinkDB APT key
   apt_key: url=http://download.rethinkdb.com/apt/pubkey.gpg
   tags:
     - database
