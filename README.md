@@ -1,4 +1,0 @@
-ansible-playbooks
-=================
-
-Ansible Playbooks

@@ -1,0 +1,13 @@
+---
+
+- name: Install Redis package
+  apt: pkg=redis-server state=latest
+  tags:
+    - redis
+    - queue
+
+- name: Ensure Redis service is enabled
+  service: name=redis-server state=started enabled=yes
+  tags:
+    - redis
+    - queue

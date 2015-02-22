@@ -4,4 +4,4 @@
   sudo: yes
   apt: update_cache=yes upgrade=dist
   tags:
-    - system
+    - upgrade

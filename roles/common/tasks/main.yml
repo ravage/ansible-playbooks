@@ -6,5 +6,5 @@
 - include: sysctl.yml
 - include: sudo.yml
 - include: openssh.yml
-- include: vim.yml
+- include: packages.yml
 - include: apt-repository.yml

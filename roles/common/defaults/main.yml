@@ -1,0 +1,21 @@
+---
+
+public_keys:
+  - username: ravage
+    keys:
+      - "{{ lookup('file', 'ssh/ravage.pub') }}"
+
+users:
+  ravage:
+    password: "{{ lookup('password', '../../../credentials/ravage.pwd encrypt=sha512_crypt') }}"
+    shell: '/bin/bash'
+
+ssh:
+  port: 22
+
+sudo:
+  group: wheel
+  users:
+    - ravage
+
+cache_time: 3600

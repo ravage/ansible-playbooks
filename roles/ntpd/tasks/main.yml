@@ -1,0 +1,9 @@
+- name: Add OpenNTPD package
+  apt: pkg=openntpd state=latest
+  tags:
+    - ntpd
+
+- name: Ensure service is running
+  service: name=openntpd state=started enabled=yes
+  tags:
+    - ntpd

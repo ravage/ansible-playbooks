@@ -1,0 +1,37 @@
+---
+
+- name: Add dotdeb apt key
+  apt_key: url=http://www.dotdeb.org/dotdeb.gpg state=present
+  tags:
+    - php
+
+- name: Add dotdeb repositories
+  apt_repository: repo='deb http://packages.dotdeb.org wheezy all' state=present update_cache=yes
+  tags:
+    - php
+
+- name: Add PHP5 packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5
+    - php5-fpm
+    - php5-mcrypt
+    - php5-pgsql
+  tags:
+    - php
+
+- name: Create log dir
+  file: path=/var/log/php-fpm state=directory
+  tags:
+    - php
+
+- name: Copy PHP-FPM config file
+  template: src=php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf owner=root group=root mode=0644
+  tags:
+    - php
+
+- name: Copy PHP-FPM default pool
+  template: src=default.conf.j2 dest=/etc/php5/fpm/pool.d/default.conf owner=root group=root mode=0644
+  notify: restart php5-fpm
+  tags:
+    - php

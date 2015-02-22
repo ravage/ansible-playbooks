@@ -4,3 +4,4 @@
   apt: pkg=python-passlib state=latest
   tags:
     - libs
+    - python-passlib
