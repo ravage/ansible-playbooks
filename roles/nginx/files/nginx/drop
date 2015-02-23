@@ -7,3 +7,6 @@ location ~ /\. { deny  all; access_log off; log_not_found off; }
 
 # deny access to libraries folder
 location ~ /libraries { deny all; return 403; }
+
+# deny access to uploads folder
+location ~ /upload* { deny all; return 403; }

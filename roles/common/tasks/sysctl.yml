@@ -6,3 +6,9 @@
   tags:
     - sysctl
     - bootstrap-system
+
+- name: Make settings available without reboot
+  command: sysctl -p
+  tags:
+    - sysctl
+    - bootstrap-system

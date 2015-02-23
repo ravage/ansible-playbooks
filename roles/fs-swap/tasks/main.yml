@@ -1,0 +1,36 @@
+---
+
+- name: Check if swap file already exists
+  stat: path={{ swap.path }}
+  register: p
+  tags:
+    - fs-swap
+
+- name: Create swap file
+  command: fallocate -l {{ swap.size }} {{ swap.path }}
+  when: not p.stat.exists
+  tags:
+    - fs-swap
+
+- name: Set swap file permissions
+  file: path={{ swap.path }} mode=600
+  when: not p.stat.exists
+  tags:
+    - fs-swap
+
+- name: Make it usable as swap
+  command: mkswap {{ swap.path }}
+  when: not p.stat.exists
+  tags:
+    - fs-swap
+
+- name: Make use of swap file without reboot
+  command: swapon {{ swap.path }}
+  when: not p.stat.exists
+  tags:
+    - fs-swap
+
+- name: Make it available after boot
+  lineinfile: dest=/etc/fstab line="/swapfile   swap    swap    sw    0    0"
+  tags:
+    - fs-swap

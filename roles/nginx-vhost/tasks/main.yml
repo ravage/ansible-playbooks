@@ -1,0 +1,26 @@
+---
+
+- name: Copy virtual host template
+  template: src=vhost.conf.j2 dest=/etc/nginx/sites-available/{{ domain }}.conf
+  tags:
+    - nginx-vhost
+
+- name: Create symlink to sites-enabled
+  file: src=/etc/nginx/sites-available/{{ domain }}.conf
+        dest=/etc/nginx/sites-enabled/{{ domain }}.conf
+        state=link
+  tags:
+    - nginx-vhost
+
+- name: Create deploy directory
+  file: path={{ root }}/{{ domain }}
+        owner={{ owner }}
+        group={{ group }}
+        state=directory
+  tags:
+    - nginx-vhost
+
+- name: Reload NGiNX
+  service: name=nginx state=reloaded
+  tags:
+    - nginx-vhost

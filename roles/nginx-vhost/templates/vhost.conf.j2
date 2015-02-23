@@ -1,0 +1,39 @@
+server {
+  server_name {{ domain }};
+
+  access_log /var/log/nginx/{{ domain }}-access.log;
+  error_log /var/log/nginx/{{ domain }}-error.log;
+
+  root {{ root }}/{{ domain }}/public;
+
+  include conf.d/images;
+  include conf.d/drop;
+
+  location / {
+      try_files maintenance.html $uri/index.html $uri.html $uri @{{ domain }};
+      expires 30d;
+      access_log on;
+  }
+
+  location @{{ domain }} {
+    # needed to forward user's IP address to rails
+    proxy_set_header  X-Real-IP  $remote_addr;
+
+    # needed for HTTPS
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_max_temp_file_size 0;
+
+    proxy_pass http://{{ domain }};
+  }
+}
+
+server {
+  server_name www.{{ domain }};
+  rewrite ^ $scheme://{{ domain }}$request_uri? permanent;
+}
+
+upstream {{ domain }} {
+  server unix:{{ root }}/{{ domain }}/tmp/server.sock;
+}
