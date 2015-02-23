@@ -1,0 +1,15 @@
+---
+
+- name: Copy Puma init and config files
+  copy: src={{ item.src }} dest={{ item.dest }} mode=0755
+  with_items:
+    - { src: puma, dest: /etc/init.d/puma }
+    - { src: run-puma, dest: /usr/local/bin/run-puma }
+    - { src: run-pumactl, dest: /usr/local/bin/run-pumactl }
+  tags:
+    - puma
+
+- name: Copy Puma init and config files
+  template: src=puma.conf.j2 dest=/etc/puma.conf
+  tags:
+    - puma

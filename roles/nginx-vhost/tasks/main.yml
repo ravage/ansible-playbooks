@@ -1,7 +1,7 @@
 ---
 
 - name: Copy virtual host template
-  template: src=vhost.conf.j2 dest=/etc/nginx/sites-available/{{ domain }}.conf
+  template: src={{ template }}.conf.j2 dest=/etc/nginx/sites-available/{{ domain }}.conf
   tags:
     - nginx-vhost
 

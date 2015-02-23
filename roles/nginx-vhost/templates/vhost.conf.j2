@@ -27,6 +27,8 @@ server {
 
     proxy_pass http://{{ domain }};
   }
+
+  {% block websockets %}{% endblock %}
 }
 
 server {
@@ -35,5 +37,7 @@ server {
 }
 
 upstream {{ domain }} {
-  server unix:{{ root }}/{{ domain }}/tmp/server.sock;
+  server unix:{{ root }}/{{ domain }}/tmp/sockets/server.sock;
 }
+
+{% block upstream %}{% endblock %}

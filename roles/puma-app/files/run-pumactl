@@ -1,0 +1,5 @@
+#!/bin/bash
+APP=$1; STATEFILE=$2; CMD=$3;
+
+cd $APP
+exec bundle exec pumactl --state $STATEFILE $CMD
