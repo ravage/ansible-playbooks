@@ -1,0 +1,6 @@
+---
+
+- name: Upgrade system
+  yum: name=* state=latest
+  tags:
+    - upgrade

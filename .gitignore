@@ -1,5 +1,6 @@
 *.pub
 *.pwd
-hosts.yml
-hosts.inv
+*.inv
+/*.yml
 credentials
+*-config

@@ -1,0 +1,57 @@
+user {{ nginx.user }} {{ nginx.group }};
+
+worker_processes {{ ansible_processor_cores * ansible_processor_count }};
+
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    map_hash_bucket_size 64;
+
+    # map $http_host $site {
+    #    include conf.d/mappings;
+    # }
+
+    server_tokens off;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    include mime.types;
+    default_type application/octet-stream;
+
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for" ' '"$gzip_ratio"';
+
+    access_log /var/log/nginx/access.log main;
+
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    server_names_hash_bucket_size 128;
+    keepalive_timeout 65;
+    client_max_body_size 10m;
+    client_body_buffer_size 128k;
+
+    gzip on;
+    gzip_http_version 1.0;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_proxied any;
+    gzip_types  text/plain text/css application/x-javascript text/xml
+                application/xml application/xml+rss text/javascript
+                image/x-icon application/x-perl application/x-httpd-cgi text/php;
+    gzip_vary on;
+    gzip_disable "msie6";
+
+    index index.html index.php;
+
+    fastcgi_cache_path /var/cache/nginx levels=1:2 keys_zone=microcache:128m inactive=30m;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}

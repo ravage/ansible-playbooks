@@ -1,0 +1,43 @@
+---
+
+- name: Install Ruby build dependencies
+  yum: name={{ item }} state=latest
+  with_items:
+    - libffi-devel
+    - gdbm-devel
+    - ncurses-devel
+    - zlib-devel
+    - openssl-devel
+    - readline-devel
+    - libyaml-devel
+  tags:
+    - ruby-mri
+
+- name: Check if Ruby was previously built by Ansible
+  stat: path=/home/{{ deployer }}/.ansible-ruby-{{ ruby.version }}
+  register: p
+  tags:
+    - ruby-mri
+
+- name: Build Ruby
+  command: ruby-install ruby {{ ruby.version }}
+  when: not p.stat.exists
+  register: result
+  tags:
+    - ruby-mri
+
+- name: Create build control file
+  file: path=/home/{{ deployer }}/.ansible-ruby-{{ ruby.version }} state=touch
+  when: result|success
+  tags:
+    - ruby-mri
+
+- name: Do not build documentation for gems
+  lineinfile: "dest=/home/{{ deployer }}/.gemrc create=yes line='gem: --no-ri --no-rdoc --user-install'"
+  tags:
+    - ruby-mri
+
+- name: Correct home directory ownership
+  command: chown -R {{ deployer }}:{{ deployer }} /home/{{ deployer }}
+  tags:
+    - ruby-mri

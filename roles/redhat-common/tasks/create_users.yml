@@ -1,0 +1,12 @@
+---
+
+- name: Create users with system access
+  user: name={{ item.key }}
+        password="{{ item.value.password }}"
+        shell="{{ item.value.shell }}"
+        update_password=on_create state=present
+        createhome=yes
+  with_dict: users
+  tags:
+    - create-users
+    - bootstrap-users

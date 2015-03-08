@@ -1,6 +1,6 @@
-RI_VERSION=0.4.3
+RI_VERSION=0.5.0
 
-wget -O ruby-install-$RI_VERSION.tar.gz https://github.com/postmodern/ruby-install/archive/v$RI_VERSION.tar.gz
+curl -Lo ruby-install-$RI_VERSION.tar.gz https://github.com/postmodern/ruby-install/archive/v$RI_VERSION.tar.gz
 tar -xzvf ruby-install-$RI_VERSION.tar.gz
 cd ruby-install-$RI_VERSION/
 sudo make install

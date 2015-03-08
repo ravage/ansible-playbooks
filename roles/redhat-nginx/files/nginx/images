@@ -1,0 +1,17 @@
+location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml|eot|svg|ttf|woff|woff2|otf)$ {
+  access_log off;
+  log_not_found off;
+  expires max;
+}
+
+location ~ ^/assets/ {
+  expires max;
+  gzip_static on;
+  add_header Cache-Control public;
+  add_header ETag "";
+  break;
+}
+
+location ~* \.(eot|ttf|woff|woff2|otf)$ {
+  add_header Access-Control-Allow-Origin *;
+}

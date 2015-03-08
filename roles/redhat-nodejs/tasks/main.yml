@@ -1,0 +1,11 @@
+---
+
+- name: Install epel-release repository
+  yum: name=epel-release state=latest
+  tags:
+    - nodejs
+
+- name: Install NodeJS packages
+  yum: name=nodejs state=latest
+  tags:
+    - nodejs

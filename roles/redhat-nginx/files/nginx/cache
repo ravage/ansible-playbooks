@@ -1,0 +1,29 @@
+set $no_cache 0;
+
+# If non GET/HEAD, don't cache & mark user as uncacheable for 1 second via cookie
+if ($request_method !~ ^(GET|HEAD)$) {
+    set $no_cache 1;
+}
+
+# Drop no cache cookie if need be
+# (for some reason, add_header fails if included in prior if-block)
+if ($no_cache = 1) {
+    add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
+    add_header X-Microcachable "0";
+}
+
+# Bypass cache if no-cache cookie is set
+if ($http_cookie ~* "_mcnc") {
+    set $no_cache 1;
+}
+
+# Bypass cache if flag is set
+fastcgi_no_cache        $no_cache;
+fastcgi_no_cache        $http_pragma $http_authorization;
+fastcgi_cache_bypass    $no_cache;
+fastcgi_cache           microcache;
+fastcgi_cache_key       "$scheme$request_method$host$request_uri";
+fastcgi_cache_valid     200 301 302 1h;
+fastcgi_cache_valid     any 5m;
+fastcgi_cache_min_uses  1;
+fastcgi_cache_use_stale error timeout invalid_header http_500;

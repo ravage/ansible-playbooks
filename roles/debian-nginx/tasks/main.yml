@@ -1,0 +1,72 @@
+---
+
+- name: Add NGiNX APT key
+  apt_key: url=http://nginx.org/keys/nginx_signing.key
+  tags:
+    - nginx
+
+- name: Add NGiNX repository
+  apt_repository: repo="deb http://nginx.org/packages/debian/ {{ ansible_lsb.codename }} nginx"
+  tags:
+    - nginx
+    - web
+
+- name: Install NGiNX
+  apt: pkg=nginx state=latest update_cache=yes
+  tags:
+    - nginx
+    - web
+
+- name: Copy /etc/nginx/nginx.conf
+  template: src=nginx/nginx.conf.j2
+            dest=/etc/nginx/nginx.conf
+            owner=root
+            group=root
+            mode=0644
+  tags:
+    - nginx
+    - web
+
+- name: Copy NGiNX conf.d support configuration
+  copy: src=nginx/{{ item }}
+        dest=/etc/nginx/conf.d/{{ item }}
+        owner=root group=root
+        mode=6440
+  with_items:
+    - cache
+    - drop
+    - images
+    - mappings
+    - php
+    - cloudflare.conf
+  tags:
+    - nginx
+    - web
+
+- name: Create sites(enabled/available) directories
+  file: path=/etc/nginx/{{ item }} owner=root mode=755 state=directory
+  with_items:
+    - sites-available
+    - sites-enabled
+  tags:
+    - nginx
+    - web
+
+- name: Change permission for cache directory
+  file: path=/var/cache/nginx state=directory owner={{ nginx.group }} group={{ nginx.group }}
+  tags:
+    - nginx
+    - web
+
+- name: Create /srv/sites directory
+  file: path=/srv/sites owner=root mode=755 state=directory
+  notify: restart nginx
+  tags:
+    - nginx
+    - web
+
+- name: Ensure NGiNX is enabled
+  service: name=nginx state=started enabled=yes
+  tags:
+    - nginx
+    - web

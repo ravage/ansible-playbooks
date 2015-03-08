@@ -1,0 +1,11 @@
+---
+
+- name: Add NTPD package
+  yum: name=ntp state=latest
+  tags:
+    - ntpd
+
+- name: Ensure service is running
+  service: name=ntpd state=started enabled=yes
+  tags:
+    - ntpd

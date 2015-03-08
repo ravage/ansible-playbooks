@@ -1,0 +1,10 @@
+---
+
+- name: Add public key to ~/.ssh/authorized_keys
+  authorized_key: user={{ item.0.username }} key="{{ item.1 }}" state=present
+  with_subelements:
+    - public_keys
+    - keys
+  tags:
+    - authorized-keys
+    - bootstrap-users

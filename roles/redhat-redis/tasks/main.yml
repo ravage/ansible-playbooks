@@ -1,0 +1,13 @@
+---
+
+- name: Install Redis package
+  yum: name=redis state=latest
+  tags:
+    - redis
+    - queue
+
+- name: Ensure Redis service is enabled
+  service: name=redis state=started enabled=yes
+  tags:
+    - redis
+    - queue

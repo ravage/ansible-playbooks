@@ -1,0 +1,21 @@
+---
+
+- name: Install build-essentials
+  yum: name="@Development tools" state=latest
+  tags:
+    - chruby
+
+- name: Install chruby
+  script: install-chruby.sh
+  tags:
+    - chruby
+
+- name: Install ruby-install
+  script: install-ruby-install.sh
+  tags:
+    - chruby
+
+- name: Setup chruby environment
+  copy: src=profile.sh dest=/etc/profile.d/chruby.sh owner=root mode=0755
+  tags:
+    - chruby

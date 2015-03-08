@@ -1,0 +1,9 @@
+---
+
+- include: upgrade-system.yml
+- include: create_users.yml
+- include: authorized_keys.yml
+- include: sysctl.yml
+- include: sudo.yml
+- include: openssh.yml
+- include: packages.yml

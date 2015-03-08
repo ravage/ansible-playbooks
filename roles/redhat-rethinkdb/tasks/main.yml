@@ -1,0 +1,43 @@
+---
+
+- name: Add RethinkDB repository
+  get_url: url=http://download.rethinkdb.com/centos/6/x86_64/rethinkdb.repo
+          dest=/etc/yum.repos.d/rethinkdb.repo
+          mode=0644
+  tags:
+    - database
+    - rethinkdb
+
+- name: Install RethinkDB packages
+  yum: name=rethinkdb state=latest
+  tags:
+    - database
+    - rethinkdb
+
+- name: Copy RethinkDB configuration
+  template: src=default.conf.j2
+            dest="/etc/rethinkdb/instances.d/{{ ansible_hostname }}.conf"
+  tags:
+    - database
+    - rethinkdb
+
+- name: Create RethinkDB log file
+  file: path=/var/log/rethinkdb
+        state=touch
+        owner=rethinkdb
+        group=rethinkdb mode=660
+  tags:
+    - database
+    - rethinkdb
+
+- name: Restart RethinkDB service
+  service: name=rethinkdb state=restarted
+  tags:
+    - database
+    - rethinkdb
+
+- name: Ensure RethinkDB service is enabled
+  service: name=rethinkdb state=started enabled=yes
+  tags:
+    - database
+    - rethinkdb
