@@ -4,5 +4,6 @@
   apt: name={{ item }} state=latest
   with_items:
     - vim-nox
+    - git-core
   tags:
     - vim

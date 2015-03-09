@@ -1,0 +1,18 @@
+---
+
+- name: Adds MongoDB repository
+  copy: src=mongo.repo dest=/etc/yum.repos.d/mongo.repo
+  tags:
+    - mongo
+
+- name: Install service packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - mongodb-org
+  tags:
+    - mongo
+
+- name: Ensure service is started and running
+  service: name=mongod state=started enabled=yes
+  tags:
+    - mongo

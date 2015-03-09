@@ -6,6 +6,9 @@
     - nodejs
 
 - name: Install NodeJS packages
-  yum: name=nodejs state=latest
+  yum: name={{ item }} state=latest
+  with_items:
+    - nodejs
+    - npm
   tags:
     - nodejs
