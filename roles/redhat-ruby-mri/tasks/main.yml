@@ -20,7 +20,8 @@
     - ruby-mri
 
 - name: Build Ruby
-  command: ruby-install ruby {{ ruby.version }}
+  sudo_user: '{{ deployer }}'
+  command: ruby-install --no-install-deps ruby {{ ruby.version }}
   when: not p.stat.exists
   register: result
   tags:

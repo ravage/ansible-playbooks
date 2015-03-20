@@ -12,7 +12,6 @@ server {
   location / {
       try_files maintenance.html $uri/index.html $uri.html $uri @{{ domain }};
       expires 30d;
-      access_log on;
   }
 
   location @{{ domain }} {
@@ -37,7 +36,7 @@ server {
 }
 
 upstream {{ domain }} {
-  server unix:{{ root }}/{{ domain }}/tmp/sockets/server.sock;
+  server unix:{{ root }}/{{ domain }}/run/server.sock;
 }
 
 {% block upstream %}{% endblock %}

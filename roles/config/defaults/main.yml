@@ -33,3 +33,5 @@ nginx:
   group: nginx
 
 distribution: "{{ debian if ansilbe_distribution == 'Debian' or ansilbe_distribution == 'Ubuntu' else ansilbe_distribution|downcase }}"
+
+deployer: deployer

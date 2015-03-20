@@ -54,7 +54,7 @@
     - web
 
 - name: Create /srv/sites directory
-  file: path=/srv/sites owner=root mode=755 state=directory
+  file: path=/srv/sites owner={{ deployer }} mode=755 state=directory
   notify: restart nginx
   tags:
     - nginx

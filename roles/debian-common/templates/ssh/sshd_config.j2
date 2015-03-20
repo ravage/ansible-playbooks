@@ -2,7 +2,7 @@
 # /etc/ssh/sshd_config
 #
 
-Port {{ ssh['port'] }}
+Port {{ ssh.port }}
 Protocol 2
 
 HostKey /etc/ssh/ssh_host_rsa_key
@@ -11,7 +11,7 @@ HostKey /etc/ssh/ssh_host_dsa_key
 UsePrivilegeSeparation yes
 KeyRegenerationInterval 3600
 
-ServerKeyBits 768
+ServerKeyBits 1024
 SyslogFacility AUTH
 LogLevel INFO
 
@@ -21,7 +21,7 @@ StrictModes yes
 
 RSAAuthentication no
 PubkeyAuthentication yes
-AuthorizedKeysFile %h/.ssh/authorized_keys
+AuthorizedKeysFile .ssh/authorized_keys
 
 IgnoreRhosts yes
 RhostsRSAAuthentication no
@@ -31,7 +31,12 @@ PermitEmptyPasswords no
 ChallengeResponseAuthentication no
 PasswordAuthentication no
 
-X11Forwarding yes
+UsePrivilegeSeparation sandbox
+
+AllowAgentForwarding no
+AllowTcpForwarding no
+GatewayPorts no
+X11Forwarding no
 X11DisplayOffset 10
 PrintMotd no
 PrintLastLog yes
@@ -42,7 +47,3 @@ AcceptEnv LANG LC_*
 Subsystem sftp internal-sftp
 
 UsePAM yes
-
-Match User deployer
-    X11Forwarding no
-    AllowTcpForwarding no

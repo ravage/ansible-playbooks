@@ -7,6 +7,10 @@ public_keys:
   - username: deployer
     keys:
       - "{{ lookup('file', 'ssh/ravage.pub') }}"
+      - "{{ lookup('file', 'ssh/miguel.pub') }}"
+  - username: miguel
+    keys:
+      - "{{ lookup('file', 'ssh/miguel.pub') }}"
 
 users:
   ravage:
@@ -14,6 +18,9 @@ users:
     shell: '/bin/bash'
   deployer:
     password: "{{ lookup('password', '../../../credentials/deployer.pwd encrypt=sha512_crypt') }}"
+    shell: '/bin/bash'
+  miguel:
+    password: "{{ lookup('password', '../../../credentials/miguel.pwd encrypt=sha512_crypt') }}"
     shell: '/bin/bash'
 
 deployer: deployer
@@ -25,6 +32,7 @@ sudo:
   group: wheel
   users:
     - ravage
+    - miguel
 
 ruby:
   version: "2.2.1"
