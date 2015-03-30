@@ -1,0 +1,56 @@
+---
+
+- name: Create user nullmailer
+  user: createhome=no name=nullmailer state=present system=yes
+  tags:
+    - relay-only-mta
+
+- name: Copy nullmailer rpm
+  copy: src=nullmailer-1.13-1.x86_64.rpm dest=/tmp/nullmailer-1.13-1.x86_64.rpm
+  tags:
+    - relay-only-mta
+
+- name: Remove postfix
+  yum: pkg=postfix state=absent
+  tags:
+    - relay-only-mta
+
+- name: Install nullmailer
+  yum: name=/tmp/nullmailer-1.13-1.x86_64.rpm state=present
+  tags:
+    - relay-only-mta
+
+- name: Remove nullmailer rpm
+  file: path=/tmp/nullmailer-1.13-1.x86_64.rpm state=absent
+  tags:
+    - relay-only-mta
+
+- name: Copy configuration
+  template: src={{ item.file }}.j2
+            dest=/etc/nullmailer/{{ item.file }}
+            owner=nullmailer
+            group=nullmailer
+            mode={{ item.mode }}
+  with_items:
+    - { file: adminaddr, mode: 644 }
+    - { file: defaultdomain, mode: 644 }
+    - { file: defaulthost, mode: 644 }
+    - { file: me, mode: 644 }
+    - { file: remotes, mode: 600 }
+  tags:
+    - relay-only-mta
+
+- name: Run post-install tasks
+  script: postinst.sh
+  tags:
+    - relay-only-mta
+
+- name: Copy systemd init script
+  template: src=nullmailer.service.j2 dest=/etc/systemd/system/nullmailer.service
+  tags:
+    - relay-only-mta
+
+- name: Ensure service is running
+  service: name=nullmailer state=started enabled=yes
+  tags:
+    - relay-only-mta

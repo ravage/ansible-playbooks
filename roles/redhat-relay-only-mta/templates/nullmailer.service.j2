@@ -1,0 +1,16 @@
+[Unit]
+Description=Nullmailer relay-only MTA
+After=local-fs.target syslog.target
+ConditionPathExists=/var/nullmailer/queue
+ConditionPathExists=/etc/nullmailer/defaultdomain
+ConditionPathExists=/etc/nullmailer/me
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+WorkingDirectory=/var/nullmailer
+ExecStart=/usr/sbin/nullmailer-send
+User=nullmailer
+Group=nullmailer
+Restart=always

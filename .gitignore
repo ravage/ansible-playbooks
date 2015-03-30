@@ -4,3 +4,4 @@
 /*.yml
 credentials
 *-config
+roles/config/defaults/main.yml
