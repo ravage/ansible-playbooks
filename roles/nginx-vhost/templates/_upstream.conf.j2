@@ -1,0 +1,5 @@
+upstream {{ domain }} {
+  {% for socket in sockets %}
+  server unix:{{ root }}/{{ domain }}/tmp/sockets/server.sock;
+  {% endfor %}
+}

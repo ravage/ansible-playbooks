@@ -1,0 +1,7 @@
+{% if aliases is defined %}
+{% for alias in aliases %}
+location {{ alias.pattern }} {
+  alias {{ alias.path }};
+}
+{% endfor %}
+{% endif %}

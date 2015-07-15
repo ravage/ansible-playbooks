@@ -1,0 +1,9 @@
+{% extends 'vhost.conf.j2' %}
+
+{% block upstream %}
+upstream {{ domain }} {
+  {% for stream in streams %}
+  server {{ stream.ip }}:{{ stream.port }};
+  {% endfor %}
+}
+{% endblock %}

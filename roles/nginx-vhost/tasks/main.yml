@@ -2,6 +2,7 @@
 
 - name: Copy virtual host template
   template: src={{ template }}.conf.j2 dest=/etc/nginx/sites-available/{{ domain }}.conf
+  register: result
   tags:
     - nginx-vhost
 
@@ -21,6 +22,7 @@
     - nginx-vhost
 
 - name: Reload NGiNX
-  service: name=nginx state=reloaded
+  service: name=nginx state=restarted
+  when: result|changed
   tags:
     - nginx-vhost

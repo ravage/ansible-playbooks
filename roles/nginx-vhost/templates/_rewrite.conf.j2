@@ -1,0 +1,5 @@
+{% if rules is defined -%}
+{% for rule in rules -%}
+rewrite {{ rule }};
+{% endfor %}
+{% endif %}

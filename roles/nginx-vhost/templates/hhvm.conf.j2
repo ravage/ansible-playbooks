@@ -1,0 +1,19 @@
+{% extends 'vhost.conf.j2' %}
+
+{% block hhvm %}
+location ~ \.(hh|php)$ {
+  fastcgi_keep_conn on;
+  fastcgi_pass   {{ domain }};
+  fastcgi_index  index.php;
+  fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  include        fastcgi_params;
+}
+{% endblock %}
+
+{% block upstream %}
+upstream {{ domain }} {
+  {% for stream in streams %}
+  server {{ stream.ip }}:{{ stream.port }};
+  {% endfor %}
+}
+{% endblock %}

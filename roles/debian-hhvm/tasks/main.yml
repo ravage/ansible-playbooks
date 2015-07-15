@@ -1,0 +1,41 @@
+---
+
+- name: Add HHVM repository PGP key
+  apt_key: keyserver=keyserver.ubuntu.com  id=0x5a16e7281be7a449 state=present
+  tags:
+    - hhvm
+
+- name: Add HHVM repository
+  apt_repository: repo='deb http://dl.hhvm.com/debian jessie main' state=present
+  tags:
+    - hhvm
+
+- name: Refresh repository
+  apt: update_cache=yes
+  tags:
+    - hhvm
+
+- name: Install HHVM package
+  apt: name=hhvm state=latest
+  tags:
+    - hhvm
+
+# - name: Install PostgreSQL for HHVM (outdated release)
+#   get_url: >
+#     url=https://github.com/PocketRent/hhvm-pgsql/raw/releases/3.7.0/debian/jessie/pgsql.so
+#     dest=/etc/hhvm/pgsql.so
+#     mode=0644
+#   tags:
+#     - hhvm
+
+- name: Make PostgreSQL extension known
+  lineinfile: dest=/etc/hhvm/php.ini line="extension_dir = /etc/hhvm"
+  tags:
+    - hhvm
+
+- lineinfile: dest=/etc/hhvm/php.ini line="hhvm.extensions[pgsql] = pgsql.so"
+  tags:
+    - hhvm
+
+- name: Set HHVM to start on boot
+  service: name=hhvm enabled=yes state=started

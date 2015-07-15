@@ -1,7 +1,7 @@
 ---
 
 - name: Install sudo package
-  yum: name=sudo state=latest
+  apt: name=sudo state=latest
   tags:
     - sudo
     - bootstrap-system

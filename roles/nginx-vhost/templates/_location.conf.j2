@@ -1,0 +1,9 @@
+{% if locations is defined -%}
+{% for location in locations -%}
+location {{ location.pattern }} {
+  {% for directive in location.directives %}
+  {{ directive }};
+  {% endfor %}
+}
+{% endfor %}
+{% endif %}

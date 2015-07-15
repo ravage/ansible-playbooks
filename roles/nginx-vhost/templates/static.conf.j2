@@ -1,0 +1,17 @@
+server {
+  server_name {{ domain }};
+
+  access_log /var/log/nginx/{{ domain }}-access.log;
+  error_log /var/log/nginx/{{ domain }}-error.log;
+
+  root {{ root }}/{{ domain }}/public;
+
+  {% include "_alias.conf.j2" %}
+
+  {% include "_rewrite.conf.j2" %}
+}
+
+server {
+  server_name www.{{ domain }};
+  rewrite ^ $scheme://{{ domain }}$request_uri? permanent;
+}
