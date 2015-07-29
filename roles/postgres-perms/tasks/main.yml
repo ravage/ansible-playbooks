@@ -1,0 +1,13 @@
+---
+
+- name: Create Database
+  sudo_user: postgres
+  postgresql_db: name={{ pg.db }} state=present
+  tags:
+    - postgres-perms
+
+- name: Create users
+  sudo_user: postgres
+  postgresql_user: db={{ pg.db }} name={{ pg.user }} password={{ pg.password }} state=present
+  tags:
+    - postgres-perms
