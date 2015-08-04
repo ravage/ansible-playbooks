@@ -1,0 +1,27 @@
+---
+
+- name: Install PostgreSQL and development dependencies
+  yum: name={{ item }} state=latest
+  with_items:
+    - postgresql-server
+    - libpqxx
+    - python-psycopg2
+  tags:
+    - postgresql
+
+- name: Check for PostgreSQL data dir
+  stat: path=/var/lib/pgsql/data/pg_hba.conf
+  register: f
+  tags:
+    - postgresql
+
+- name: Initialize database
+  command: postgresql-setup initdb
+  when: not f.stat.exists
+  tags:
+    - postgresql
+
+- name: Start and enable PostgreSQL
+  service: name=postgresql state=started enabled=yes
+  tags:
+    - postgresql

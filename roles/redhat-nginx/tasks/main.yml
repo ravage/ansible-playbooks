@@ -28,12 +28,12 @@
         owner=root group=root
         mode=6440
   with_items:
-    - cache
+    # - cache
     - drop
-    - images
-    - mappings
-    - php
-    - cloudflare.conf
+    # - images
+    # - mappings
+    # - php
+    # - cloudflare.conf
   tags:
     - nginx
     - web

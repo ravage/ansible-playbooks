@@ -2,7 +2,7 @@ user {{ nginx.user }} {{ nginx.group }};
 
 worker_processes {{ ansible_processor_cores * ansible_processor_count }};
 
-pid /var/run/nginx.pid;
+pid /run/nginx.pid;
 
 events {
     worker_connections  1024;

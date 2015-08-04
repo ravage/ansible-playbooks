@@ -5,6 +5,24 @@
   tags:
     - openssh
 
+- name: Check for ecdsa key
+  stat: path=/etc/ssh/ssh_host_ecdsa_key
+  register: ecdsa
+  tags:
+    - ssh
+
+- name: Check for dsa key
+  stat: path=/etc/ssh/ssh_host_dsa_key
+  register: dsa
+  tags:
+    - ssh
+
+- name: Check for rsa key
+  stat: path=/etc/ssh/ssh_host_rsa_key
+  register: rsa
+  tags:
+    - ssh
+
 - name: Copy /etc/ssh/sshd_config
   sudo: yes
   template: src=ssh/sshd_config.j2
