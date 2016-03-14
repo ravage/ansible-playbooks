@@ -1,0 +1,90 @@
+#
+# /etc/ssh/sshd_config
+#
+
+Port {{ ssh.port }}
+AddressFamily any
+ListenAddress 0.0.0.0
+
+Protocol 2
+
+HostKey /etc/ssh/ssh_host_key
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+KeyRegenerationInterval 1h
+ServerKeyBits 1024
+
+RekeyLimit default none
+
+SyslogFacility AUTH
+LogLevel INFO
+
+LoginGraceTime 2m
+PermitRootLogin no
+StrictModes yes
+MaxAuthTries 6
+MaxSessions 8
+
+RSAAuthentication no
+PubkeyAuthentication yes
+
+AuthorizedKeysFile .ssh/authorized_keys .ssh/authorized_keys2
+
+AuthorizedPrincipalsFile none
+
+AuthorizedKeysCommand none
+AuthorizedKeysCommandUser nobody
+
+RhostsRSAAuthentication no
+HostbasedAuthentication no
+IgnoreUserKnownHosts no
+IgnoreRhosts yes
+
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+ChallengeResponseAuthentication no
+
+KerberosAuthentication no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+
+GSSAPIAuthentication no
+#GSSAPICleanupCredentials yes
+
+UsePAM no
+
+AllowAgentForwarding no
+AllowTcpForwarding no
+GatewayPorts no
+X11Forwarding no
+PermitTTY yes
+PrintMotd yes
+PrintLastLog yes
+TCPKeepAlive yes
+UseLogin no
+UsePrivilegeSeparation sandbox
+PermitUserEnvironment no
+Compression delayed
+ClientAliveInterval 0
+ClientAliveCountMax 3
+UseDNS yes
+PidFile /var/run/sshd.pid
+MaxStartups 10:30:100
+PermitTunnel no
+ChrootDirectory none
+# VersionAddendum FreeBSD-20140420
+
+Banner none
+
+Subsystem sftp  /usr/libexec/sftp-server
+
+HPNDisabled no
+HPNBufferSize 2048
+TcpRcvBufPoll yes
+
+# NoneEnabled no

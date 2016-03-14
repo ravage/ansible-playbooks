@@ -28,7 +28,7 @@ server {
   {% include "_alias.conf.j2" %}
   {% include "_location.conf.j2" %}
 
-  # include conf.d/images;
+  include conf.d/images;
   include conf.d/drop;
 
   {% if hhvm is not defined %}

@@ -30,7 +30,7 @@
   with_items:
     # - cache
     - drop
-    # - images
+    - images
     # - mappings
     # - php
     # - cloudflare.conf

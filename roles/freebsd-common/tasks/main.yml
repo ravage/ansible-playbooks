@@ -1,0 +1,89 @@
+---
+
+- name: Base packages
+  pkgng: name={{item}} state=present
+  with_items:
+    - python
+    - bash-static
+    - openntpd
+
+- name: Enable openntpd
+  service: name=openntpd enabled=yes
+
+- name: Start openntpd
+  service: name=openntpd state=started
+
+- name: Create users with system access
+  user: name={{ item.key }}
+        password="{{ item.value.password }}"
+        shell="/usr/local/bin/bash"
+        update_password=on_create state=present
+        createhome=yes
+  with_dict: '{{users}}'
+  tags:
+    - create-users
+    - bootstrap-users
+
+- name: Add public key to ~/.ssh/authorized_keys
+  authorized_key: user="{{ item.0.username }}" key="{{ item.1 }}" state=present
+  with_subelements:
+    - '{{public_keys}}'
+    - keys
+  tags:
+    - authorized-keys
+    - bootstrap-users
+
+- name: Add Bash to /etc/shells
+  lineinfile: dest=/etc/shells line='/usr/local/bin/bash'
+  tags:
+    - shell
+
+- name: Install sudo package
+  pkgng: name=sudo state=present
+  tags:
+    - sudo
+    - bootstrap-system
+
+- name: Add wheel group
+  group: name=wheel
+  tags:
+    - sudo
+    - bootstrap-system
+
+- name: Add users to group wheel
+  user: name={{ item }} group={{ sudo.group }}
+  with_items: '{{sudo.users}}'
+  tags:
+    - sudo
+
+- name: Copy /etc/sudoers.d/wheel
+  template: src=sudo/wheel.j2
+            dest=/usr/local/etc/sudoers.d/wheel
+            owner=root
+            group=wheel
+            mode=0440
+            validate="visudo -c -f %s"
+  tags:
+    - sudo
+
+# - name: Copy /etc/sudoers
+#   copy: src=sudo/sudoers
+#         dest=/etc/sudoers
+#         owner=root
+#         group=root
+#         mode=0440
+#         validate="visudo -c -f %s"
+#   tags:
+#     - sudo
+
+- name: Copy /etc/ssh/sshd_config
+  template: src=ssh/sshd_config.j2
+            dest=/etc/ssh/sshd_config
+            owner=root
+            group=wheel
+            mode=0644
+  tags:
+    - openssh
+
+- name: Restart OpenSSH
+  service: name=sshd state=restarted
